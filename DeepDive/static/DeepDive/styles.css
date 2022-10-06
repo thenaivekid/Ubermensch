@@ -1,0 +1,84 @@
+body {
+    background-color: #E3FCBF;
+    font-family: Arial, sans-serif;
+
+}
+
+
+
+.content{
+    background-color:#b8f1b0 ;
+    text-align: center;
+    margin: 70px;
+    padding: 50px;
+}
+
+
+button{
+    background-color: #b8f1b0;
+    color: rgb(110, 41, 110);
+}
+
+#copyright{
+    text-align: center;
+}
+
+#branding,#progress{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+#name{
+    color:rgb(215, 95, 95)
+}
+
+#nav,#links,#copyright{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* to animate the name */
+@keyframes move {
+    0%{
+        left:-20%;
+        opacity: 100%;
+    }
+    50%{
+        left: 20%;
+        opacity: 80%;
+    }
+    100%{
+        left:-20%;
+        opacity: 0%;
+    }
+
+}
+
+#name {
+    animation-name:move;
+    position: relative;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+}
+
+
+#links,#nav{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+}
+
+#nav{
+    padding: 10px;
+    background-color: #14c38e;
+
+}
+#nav>a{
+    text-decoration: none;
+}
