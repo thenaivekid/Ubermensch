@@ -4,9 +4,24 @@
     <head>
         <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>DeepDive</title>
+        
         <link rel="stylesheet" href="{% static 'DeepDive/styles.css' %}">
-        <link rel="icon" href="{% static 'DeepDive/logo.png' %}">
+        <link rel="icon" href="{% static 'DeepDive/images/logo.png' %}">
+        <title>DeepDive</title>
+
+        <script>
+            function showdiv(div){
+                document.querySelector(`#${div}`).style.display = 'block';
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                document.querySelectorAll('button').forEach(button => {
+                    button.onclick = function(button){
+                        showdiv(this.dataset.div)
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body>
@@ -15,7 +30,7 @@
             <a href="{% url 'home' %}"><div id="logo">
                 <!-- logo as a link to home -->
                 <!-- show a gif of deep diving here -->
-                <img src="{% static 'DeepDive/logo.png' %}" alt="logo" width="100px">
+                <img src="{% static 'DeepDive/images/logo.png' %}" alt="logo" width="100px">
             </div></a>
 
             <div id="name">
@@ -23,9 +38,9 @@
             </div>
 
                 <!-- image as a link to user's profile -->
-            <a href="{% url 'user' %}"><div id="profile">
+            <a href="{% url 'users:index' %}"><div id="profile">
                 <!-- Take a dp from user and display here -->
-                <img src="{% static 'DeepDive/dp.JPG' %}" width="50px" alt="profile pic">
+                <img src="{% static 'DeepDive/images/dp.JPG' %}" width="50px" alt="profile pic">
             </div></a>
             
         </div>
@@ -57,10 +72,10 @@
         <br>
 
         <div id="progress">
-            <h1 id="bar">I am overcoming myself.</h1>
-            [show a progress bar here. each minute spent on this web application = 1% progress]
+            <div id="bar"></div>
+            <!-- [show a progress bar here. each minute spent on this web application = 1% progress] -->
             <div id="crown">
-                <img src="{% static 'DeepDive/crown.JPG' %}" alt="crown" width="50px">
+                <img src="{% static 'DeepDive/images/crown.JPG' %}" alt="crown" width="50px">
             </div>
         </div>
 
@@ -74,7 +89,7 @@
             <a class= "link-item" href="">Precautions</a>
             <a class= "link-item" href="">Legal actions</a>
             <a class= "link-item" href="">API</a>
-            <a class= "link-item" href="">Contact</a>
+            <a class= "link-item" href="{% url 'contact' %}">Contact</a>
             <a class= "link-item" href="">Advertising</a>
             <a class= "link-item" href="">Social media</a>
             <a class= "link-item" href="{% url 'emptiness' %}">Emptiness</a>

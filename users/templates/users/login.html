@@ -6,12 +6,12 @@
     <div>{{ message }}</div>
 {% endif %}
 <br> 
-
-<form action="{% url 'login' %} " method="post">
+<h1>Log in</h1>
+<form action="{% url 'users:login' %} " method="post">
     {% csrf_token %} 
     <input type="text" name="username" placeholder="Username">
     <input type="password" name="password" placeholder="Password">
     <input type="submit" placeholder="Submit">
 </form>
-
+<h2><a href="{% url 'users:signup' %}">Sign up</a></h2>
 {% endblock %} 

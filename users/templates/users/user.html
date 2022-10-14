@@ -8,7 +8,24 @@
     <li>Name: {{ request.user.username  }}</li>
     <li>Email: {{request.user.email}} </li>
 </ul>
+<h3>{{message}}</h3>
+<a href="{% url 'home' %}">Back to Home</a>
+<br>
+<a href="{% url 'users:login' %}">Log in</a><br>
+<a href="{% url 'users:logout' %}">Log out</a><br>
+<button data-div="change_password">Change Password</button>
+<br>
+<div id="change_password" style="display: none;">
+    <form action="{% url 'users:change_password' %}" method="POST">
+        {% csrf_token %} 
+        <input type="text" name="username" placeholder="User name"><br>
+        <input type="text" name="password0" placeholder="Current Password"><br>
+        <input type="text" name="password1" placeholder="New Password"><br>
+        <input type="text" name="password2" placeholder="New Password Again"><br>
+        <input type="submit" value="Save Changes"><br>
+    </form>
 
-
-<a href="{% url 'logout' %}">Log out</a>
+    {{help_texts}}
+</div>
 {% endblock %} 
+
