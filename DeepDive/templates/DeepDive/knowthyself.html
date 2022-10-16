@@ -5,7 +5,24 @@
 
 <div class="content">
     <h1>My Values</h1>
-    [Put your values here]
+    <ul>
+        {% for value in values %} 
+            <li><h2>{{value.value}}</h2></li>
+        {% endfor %}
+    </ul>
+     
+
+    <button data-div="add_value">+Add value</button>
+    <div id="add_value" style="display: none;">
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="value" >
+            <input type="text" name="value" placeholder="Your Biggest value">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
+
 </div>
 
 <div class="content">

@@ -29,6 +29,7 @@
     <div id="add_quote" style="display: none;">
         <form action="{% url 'home'%}" method="POST" >
             {% csrf_token %} 
+            <input type="hidden" name="formname" value="quote" >
             <input type="text" name="new_quote" placeholder="New quote">
             <input type="text" name="new_saidby" placeholder="saidby">
             <input type="submit" value="Add">
@@ -44,10 +45,25 @@
     <img src="{% static 'DeepDive/images/selflove.jpg' %}" alt="My beautiful picture" width="200px">
 </div>
 
-<div class="content">
+<div class="content" >
     <h1>My Biggest Goal</h1>
-    [Ask the user what their biggest aimbition is and display it here]
-    <h1>To be a charismatic leader, a talented CS engineer and an adventurer</h1>
+    <ul>
+        {% for goal in goals %} 
+            <li><h2>{{goal.goal}}</h2></li>
+        {% endfor %}
+    </ul>
+     
+
+    <button data-div="add_goal">+Add Goal</button>
+    <div id="add_goal" style="display: none;">
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="goal" >
+            <input type="text" name="goal" placeholder="Your Biggest Goal">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
 </div>
 
 <div class="content">

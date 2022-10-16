@@ -10,10 +10,11 @@
         <title>DeepDive</title>
 
         <script>
+            // "shows hidden divs"
             function showdiv(div){
                 document.querySelector(`#${div}`).style.display = 'block';
             }
-
+            // triggers to show hidden divs
             document.addEventListener('DOMContentLoaded', function(){
                 document.querySelectorAll('button').forEach(button => {
                     button.onclick = function(button){
@@ -73,6 +74,8 @@
 
         <div id="progress">
             <div id="bar"></div>
+                <progress id="progressBar" max="100.00" value="33.1">
+                33.1%</progress>
             <!-- [show a progress bar here. each minute spent on this web application = 1% progress] -->
             <div id="crown">
                 <img src="{% static 'DeepDive/images/crown.JPG' %}" alt="crown" width="50px">

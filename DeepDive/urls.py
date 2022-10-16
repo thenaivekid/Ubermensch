@@ -12,5 +12,4 @@ urlpatterns = [
     path("journal/", views.journal, name="journal"),
     path("emptiness/", views.emptiness, name="emptiness"),
     path("contact/", views.contact, name="contact"),
-    
 ]
