@@ -1,0 +1,12 @@
+body{
+    text-align:center;
+    background-color: #d9d7f1;
+    padding: 50px;
+}
+#nav{
+    background-color: #ffcbcb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+}

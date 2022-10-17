@@ -1,26 +1,23 @@
-from email import message
-import http
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.models import User 
-from django.contrib.auth.password_validation import validate_password,password_changed,password_validators_help_text_html
+
+from .utils import is_valid_password
+
 
 # Create your views here.
-
-# to change the header of admin page
-
-
-
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("users:login"))
+        return render(request,'users/index.html',{
+            "not_authenticated":"Please log in to proceed."
+        })
     
     else:
-        help_texts = password_validators_help_text_html(password_validators=None)   
-        return render(request, "users/user.html",{
-            "help_texts": help_texts,
+          
+        return render(request, "users/index.html",{
+           
         })
 
 def login_view(request):
@@ -31,39 +28,60 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return render(request, "users/user.html",{
+            return render(request, "users/index.html",{
                 "message": "Logged in successfully!"
             })
         else:
-            return render(request, "users/login.html" , {
-            "message": "Invalid credentials."
+            return render(request, "users/index.html" , {
+            "message": "Invalid credentials.",
+            "not_authenticated":"Please log in to proceed."
             })
 
-    return render(request, "users/login.html")
+    return render(request, "users/index.html")
      
 def logout_view(request):
     logout(request)
-    return render(request, "users/login.html", {
-        "message": "Logged out"
-    })
+    return render(request,'users/index.html',{
+        "not_authenticated":"Please log in to proceed."
+    }) 
 
 
-def signup_view(request):
+def signup_view(request): 
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
         username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']   
         email = request.POST['email']
-        password = request.POST['password']
-        validate_password(password, user=username, password_validators=None)
-        user = User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
-        user.save()
-        login(request, user)
-        return render(request, "users/user.html")
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if username:
+            if password1 == password2:
+                if is_valid_password(password1):
+                    user = User.objects.create_user(username=username,email=email,password=password1,first_name=first_name,last_name=last_name)
+                    user.save()
+                    login(request, user)
+                    return HttpResponseRedirect(reverse("users:index"))
+                else:
+                    return render(request,'users/index.html',{
+                        "message":"Passwords must contain at least 8 characts including sympbols, lowercase, uppercase letters and numbers.",
+                        "not_authenticated":"Please log in to proceed."
+                    })
+            else: 
+                return render(request,'users/index.html',{
+                    "message":"Passwords no match",       
+                    "not_authenticated":"Please log in to proceed."            
+                })
+        else:
+              
+            return render(request,'users/index.html',{
+                "message":"Did you forget to fill in your username?",
+                "not_authenticated":"Please log in to proceed."
+                
+            })
 
-    help_texts = password_validators_help_text_html(password_validators=None)   
-    return render(request,'users/signup.html',{
-        "help_text": help_texts,
+      
+    return render(request,'users/index.html',{
+
         
     })
 
@@ -76,27 +94,24 @@ def change_password_view(request):
         password2=request.POST['password2']
         user = authenticate(request, username=username, password=password0)
 
-        if user is not None:
+        if user:
             if password1 == password2:
-                validate_password(password1, user=username, password_validators=None)
-                user.set_password('password1')
-                user.save()
-                password_changed(password0, user=None, password_validators=None)
-                login(request, user)
-                return render(request, "users/user.html",{
-                    "message": "Password changed successfully!",
-                    "help_texts": help_texts,
-
-                })
+                if is_valid_password(password1):
+                    user.set_password('password1')
+                    user.save()
+                    update_session_auth_hash(request, user) #delets the past sessions and start a new one
+                    login(request, user)
+                    return render(request, "users/index.html",{
+                        "message": "Password changed successfully!",                 
+                    })
   
             else:
-                help_texts = password_validators_help_text_html(password_validators=None)   
-                return render(request, "users/user.html",{
+                  
+                return render(request, "users/index.html",{
                     "message": "Password didn't match!",
-                    "help_texts": help_texts,
+                   
                 })
         else:
-            return render(request, "users/user.html",{
-                "message": "Incorrect old password",
-                "help_texts": help_texts,
+            return render(request, "users/index.html",{
+                "message": "Incorrect user name or old password or both!",               
             })    
