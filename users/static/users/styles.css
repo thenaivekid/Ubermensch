@@ -3,7 +3,7 @@ body{
     background-color: #d9d7f1;
     padding: 50px;
 }
-#nav{
+#nav,#backhome{
     background-color: #ffcbcb;
     display: flex;
     flex-wrap: wrap;
