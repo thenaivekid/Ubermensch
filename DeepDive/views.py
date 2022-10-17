@@ -1,146 +1,93 @@
 import random
+import datetime
+from email.quoprimime import quote
+from urllib import response
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
-from django.utils import timezone
-from django.db.models import Q
+from django.utils import timezone,timesince
+from .forms import EmailForm
+
+from django.core.mail import send_mail
+
+from .models import Quotes,Timespent,BiggestGoals
 
 
-
-from .models import *
 # Create your views here.
-question_list= Question.objects.filter(pub_date__lte=timezone.now()).all()
-latest_question_list= question_list.order_by('-pub_date')[:5]
-random_question = random.choice(question_list)
-# questions will be displayed only if the choices are available.
-def index(request):
-    return render(request, "polls/index.html",{
-        "latest_question_list": latest_question_list,
-        "random_question":random_question,
+
+def home(request):
+    user = request.user
+    if not user:
+        return HttpResponse("Please login to proceed.")
+    quotes =Quotes.objects.all()
+    quote= random.choice(quotes)
+    if request.method=='POST':
+        formname= request.POST['formname']
+        
+        if formname=='quote':
+            new_quote = request.POST["new_quote"]
+            new_saidby= request.POST["new_saidby"]
+            Quotes.objects.create(quote=new_quote,saidby=new_saidby)
+            return HttpResponseRedirect(reverse('home'))
+
+        if formname=='goal':
+            goal = request.POST["goal"]
+            BiggestGoals.objects.create(user=user,goal=goal)
+            return HttpResponseRedirect(reverse('home'))
+    return render(request, "DeepDive/home.html",{
+        "quote": quote,
+        "goals": BiggestGoals.objects.filter(user=user).all(),
     })
 
-def allpolls(request):
+def about(request):
+    return render(request, "DeepDive/about.html")
+
+def knowthyself(request):
+    return render(request, "DeepDive/knowthyself.html")
+
+def overcomethyself(request):
+    return render(request, "DeepDive/overcomethyself.html")
+
+def love(request):
+    return render(request, "DeepDive/love.html")
+
+def spinningwheels(request):
+    return render(request, "DeepDive/spinningwheels.html")
+
+def activities(request):
+    return render(request, "DeepDive/activities.html",{
+    })
+
+
+def user(request):
+    return render(request, "DeepDive/user.html")
+
+def emptiness(request):
+    return render(request, "DeepDive/emptiness.html")
+
+def contact(request):
     if request.method =='POST':
-        question = request.POST['question']
-        if question:
-            author = request.POST['author']
-            option1 = request.POST['option1']
-            option2 = request.POST['option2']
-            option3 = request.POST['option3']
-            option4 = request.POST['option4']
-            if not Question.objects.filter(question_text =question):
-                question=Question.objects.create(question_text= question,author=author,pub_date=timezone.now())
-                if option1:
-                    Choice.objects.create(question=question,choice_text=option1)
-                if option2:
-                    Choice.objects.create(question=question,choice_text=option2)
-                if option3:
-                    Choice.objects.create(question=question,choice_text=option3)
-                if option4:
-                    Choice.objects.create(question=question,choice_text=option4)
-                return render(request, "polls/allpolls.html",{
-                    'message':"Question added successfully.",
-                    'question_list':question_list,
-                    "random_question":random_question,
-                })
-            else:
-                return render(request, "polls/allpolls.html",{
-                    'message':"Question already exists!",
-                    'question_list':question_list,
-                    "random_question":random_question,
-                })
+        form= EmailForm(request.POST)
+        if form.is_valid():
+            sentfrom=form.cleaned_data.get('sentfrom')
+            subject = form.cleaned_data.get('subject')
+            content = form.cleaned_data.get('content')
+            send_mail(
+                subject=subject,
+                message=content,
+                from_email=sentfrom,
+                recipient_list=['neupane.ashok.9696@gmail.com'],
+                fail_silently=False,
+                )
+        return HttpResponseRedirect(reverse('home'))
 
-    
-    return render(request, "polls/allpolls.html",{
-    'question_list':question_list,
-    "random_question":random_question,
-    })
-    
-
-            
-
-def detail(request,question_id):
-    question= Question.objects.get( pk=question_id)
-    if question.pub_date <= timezone.now():
-
-        return render(request,'polls/detail.html',{
-            "question":question,
-            "random_question":random_question,
-        })
-    else:
-         return render(request,'polls/detail.html',{
-            'message':"Not published yet!",
-            "random_question":random_question,
-        })
-
-
-def result(request,question_id):
-    question= Question.objects.get(pk=question_id)
-    return render(request, "polls/result.html",{
-        "question": question,
-        "random_question":random_question,
+    return render(request,'deepdive/contact.html',{
+        "form": EmailForm(),
     })
 
 
-def vote(request,question_id):
-    if request.method =="POST":
-        user_id= request.user.id #get the user id from session that is sent in with request
-        user=MyUser.objects.get(pk=user_id)
-        qualifiedUsers= MyUser.objects.exclude(question=question_id)
-        question= Question.objects.get(pk=question_id)
-        if user in qualifiedUsers:
-            try:
-                selected_choice = question.choice_set.get(pk = request.POST['choice'])
-            except: 
-                return render(request,'polls/detail.html',{
-                    "question": question,
-                    "message": "Please select an option.",
-                    "random_question":random_question,
-                })
-            else:
-                
-                user.question.add(question)
-                selected_choice.vote +=1
-                selected_choice.save()
-                return HttpResponseRedirect(reverse('polls:result',args=(question_id,)))
-        else: 
-            return render(request,'polls/detail.html',{
-                    "question": question,
-                    "already": "yes",
-                    "random_question":random_question,
-                })
-    return render(request,'polls/detail.html',{
-                    "question": question,
-                    
-                    "random_question":random_question,
-                })
-
-
-def search(request):
-    query = request.GET.get('q','')
-    if query:
-        qset = (
-            Q(question_text__icontains= query)
-            )
-        results = Question.objects.filter(qset).distinct()
-    
-        if results:
-            return render(request, 'polls/search.html',{
-                'results': results,
-                'query':query,
-                "random_question":random_question,
-
-            })
-        else:
-            return render(request, 'polls/search.html',{
-                "message":"No result found.",
-                'query':query,
-                "random_question":random_question,
-            })
-            
-
-    else: 
-        return render(request, "polls/search.html",{
-                'message':"Please write a query.",
-                "random_question":random_question,
-            })
+def timespent(request):
+    timespent = request.POST['timespent']
+    response = timespent
+    Timespent.objects.create(timespent=timespent)
+    return HttpResponse(response)

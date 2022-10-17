@@ -1,0 +1,17 @@
+body {
+    display: grid;
+    grid-template-columns: 200px auto;
+    text-align: center;
+    background-color: #E3FCBF;
+    font-family: Arial, sans-serif;
+
+}
+
+
+
+.content{
+    background-color:#b8f1b0 ;
+    margin: 20px;
+    padding: 20px;
+}
+

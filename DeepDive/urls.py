@@ -9,7 +9,6 @@ urlpatterns = [
     path("love/", views.love, name="love"),
     path("spinningwheels/", views.spinningwheels, name="spinningwheels"),
     path("activities/", views.activities, name="activities"),
-    path("journal/", views.journal, name="journal"),
     path("emptiness/", views.emptiness, name="emptiness"),
     path("contact/", views.contact, name="contact"),
 ]

@@ -1,0 +1,17 @@
+{% extends 'journal/layout.html' %} 
+{% block body %} 
+<div class="content">
+    <form action="{% url 'journal:newjournal' %}" method="post">
+        {% csrf_token %} 
+        <input type="date" name="title" required autofocus ><br>
+        <textarea name="highlights"  cols="30" rows="10" placeholder="Highlights of the day" ></textarea><br>
+        <textarea name="fun_stuffs"  cols="30" rows="10" placeholder="Fun stuffs" ></textarea><br>
+        <textarea name="emotions"  cols="30" rows="10" placeholder="Emotions felt today" ></textarea><br>
+        <textarea name="what_went_right"  cols="30" rows="10" placeholder="What went right today" ></textarea><br>
+        <textarea name="what_went_wrong"  cols="30" rows="10" placeholder="What went wrong today" ></textarea><br>
+        <input type="number"  max="10" name="rating" required placeholder="Rating"><br>
+        <input type="submit">
+    </form>
+
+</div>
+{% endblock %}
