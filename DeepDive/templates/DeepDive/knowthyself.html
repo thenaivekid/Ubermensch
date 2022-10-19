@@ -14,10 +14,10 @@
 
     <button data-div="add_value">+Add value</button>
     <div id="add_value" style="display: none;">
-        <form action="{% url 'home' %}" method="POST">
+        <form action="{% url 'knowthyself' %}" method="POST">
             {% csrf_token %} 
             <input type="hidden" name="formname" value="value" >
-            <input type="text" name="value" placeholder="Your Biggest value">
+            <input required type="text" name="value" placeholder="Your Biggest value">
             <input type="submit" value="ADD">
         </form>
 
@@ -27,45 +27,148 @@
 
 <div class="content">
     <h1>My Fears</h1>
-    [Put your fears here]
+    <ul>
+        {% for fear in fears %} 
+            <li><h2>{{fear.fear}}</h2></li>
+        {% endfor %}
+    </ul>
+    <button data-div="add_fear">+Add Fear</button>
+    <div id="add_fear" style="display: none;">
+        <form action="{% url 'knowthyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="fear" >
+            <input  required type="text" name="fear" placeholder="Your Fear">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
 </div>
 
 <div class="content">
     <h1>My Personality Traits</h1>
     [Put your personality traits scores on the scale of 0-10 here]
-<!-- make form to take input and display the score -->
     <ul><h3>
-        <li>Openness: This trait describes your curiosity and affinity for new ideas</li>
-        <li>Conscientiousness: This trait involves the way you get things done</li>
-        <li>Extroversion: This trait is all about how you relate to people</li>
-        <li>Agreeableness: This trait taps into your attitudes toward teamwork and decision-making</li>
-        <li>Neuroticism: This trait speaks to your emotional stability and tendency to worry</li>
+        {% for personality_trait in personality_traits %}
+        <li>Openness: This trait describes your curiosity and affinity for new ideas    -->{{personality_trait.openness}}</li>
+        <li>Conscientiousness: This trait involves the way you get things done  -->{{personality_trait.conscientiousness}}</li>
+        <li>Extroversion: This trait is all about how you relate to people  -->{{personality_trait.extroversion}}</li>
+        <li>Agreeableness: This trait taps into your attitudes toward teamwork and decision-making  -->{{personality_trait.agreeableness}}</li>
+        <li>Neuroticism: This trait speaks to your emotional stability and tendency to worry  -->{{personality_trait.neuroticism}}</li><br><br>
+        {% endfor %}
     </h3></ul>
+    <button data-div="add_personality_trait">Add Scores</button>
+    <div id="add_personality_trait" style="display: none;">
+        <form action="{% url 'knowthyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="personality_trait" >
+            <input required  type="number" max="10" name="openness_score" placeholder="Openness_score">
+            <input required  type="number" max="10" name="conscientiousness_score" placeholder="Conscientiousness_score">
+            <input required  type="number" max="10" name="extroversion_score" placeholder="extroversion_score">
+            <input required  type="number" max="10" name="agreeableness_score" placeholder="agreeableness_score">
+            <input required  type="number" max="10" name="neuroticism_score" placeholder="Openness_score">
+            <input type="submit" value="ADD">
+        </form>
+    </div>
 </div>
 
 <div class="content">
     <h1>My Likes</h1>
-    [Put your likes here]
+        <ul>
+            {% for like in likes %} 
+                <li><h2>{{like.like}}</h2></li>
+            {% endfor %}
+        </ul>
+        <button data-div="add_like">+Add like</button>
+        <div id="add_like" style="display: none;">
+            <form action="{% url 'knowthyself' %}" method="POST">
+                {% csrf_token %} 
+                <input type="hidden" name="formname" value="like" >
+                <input  required type="text" name="like" placeholder="Your like">
+                <input type="submit" value="ADD">
+            </form>
+
+        </div>
+    </div>
 </div>
 
 <div class="content">
     <h1>My Dislikes</h1>
-    [Put your dislikes here]
+    <ul>
+        {% for dislike in dislikes %} 
+            <li><h2>{{dislike.dislike}}</h2></li>
+        {% endfor %}
+    </ul>
+    <button data-div="add_dislike">+Add dislike</button>
+    <div id="add_dislike" style="display: none;">
+        <form action="{% url 'knowthyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="dislike" >
+            <input  required type="text" name="dislike" placeholder="Your dislike">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
+    </div>
 </div>
 
 <div class="content">
     <h1>My Strengths</h1>
-    [Put your strengths here]
+    <ul>
+        {% for strength in strengths %} 
+            <li><h2>{{strength.strength}}</h2></li>
+        {% endfor %}
+    </ul>
+    <button data-div="add_strength">+Add strength</button>
+    <div id="add_strength" style="display: none;">
+        <form action="{% url 'knowthyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="strength" >
+            <input required  type="text" name="strength" placeholder="Your strength">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
+    </div>
 </div>
 
 <div class="content">
     <h1>My Weaknesses</h1>
-    [Put your weaknesses here]
+    <ul>
+        {% for weakness in weaknesses %} 
+            <li><h2>{{weakness.weakness}}</h2></li>
+        {% endfor %}
+    </ul>
+    <button data-div="add_weakness">+Add weakness</button>
+    <div id="add_weakness" style="display: none;">
+        <form action="{% url 'knowthyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="weakness" >
+            <input  required type="text" name="weakness" placeholder="Your weakness">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
+    </div>
 </div>
 
 <div class="content">
     <h1>Self-realized Facts</h1>
-    [Put your realizations about yourself here]
+    <ul>
+        {% for self_realization in self_realizations %} 
+            <li><h2>{{self_realization.selfrealization}}</h2></li>
+        {% endfor %}
+    </ul>
+    <button data-div="add_self_realization">+Add self_realization</button>
+    <div id="add_self_realization" style="display: none;">
+        <form action="{% url 'knowthyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="self_realization" >
+            <input  required type="text" name="self_realization" placeholder="Your self_realization">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
+    </div>
 </div>
 
 {% endblock %} 

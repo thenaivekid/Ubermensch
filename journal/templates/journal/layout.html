@@ -16,7 +16,7 @@
             <h1>Journal</h1>
             <form action="{% url 'journal:search' %}">
                 {% csrf_token %} 
-                <input type="text" name="keyword" placeholder="Date YYYY-MM-DD">
+                <input type="text" name="keyword" placeholder="usernameYYYY-MM-DD">
                 <input type="submit" value="Search">
             </form>
             <h3><a href="{% url 'journal:index' %}">All journals</a></h3>

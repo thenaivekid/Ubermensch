@@ -23,7 +23,22 @@
 
 <div class="content">
     <h1>Finding Love</h1>
-    <!-- how to get the girl  -->
+    <ul>
+        {% for thought in thoughts %} 
+            <li>{{thought.thought}}</li>
+        {% endfor %}
+    </ul>
+
+    <button data-div="add_thought">+Add thought</button>
+    <div id="add_thought" style="display: none;">
+        <form action="{% url 'love' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="thought" >
+            <input  required type="text" name="thought" placeholder="Your thought">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
 </div>
 
 
@@ -35,16 +50,46 @@
 
 <div class="content">
     <h1>Romance</h1>
+    <ul>
+        {% for romance in romances %} 
+            <li>{{romance.romance}}</li>
+        {% endfor %}
+    </ul>
     [Put the romantic things you want to do with him/her here]
     <!-- let the user enter list of items with button to show completed -->
+    <button data-div="add_romance">+Add romance</button>
+    <div id="add_romance" style="display: none;">
+        <form action="{% url 'love' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="romance" >
+            <input  required type="text" name="romance" placeholder="Your romance">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
 </div>
 
 
 <div class="content">
     <h1>Dos and Don'ts</h1>
+    <ul>
+        {% for point in points %} 
+            <li>{{point.point}}</li>
+        {% endfor %}
+    </ul>
     [Put what to do with him/her here]
     [put what not to do with him/her here]
     <!--  let the user enter list of items with button to show completed -->
+    <button data-div="add_point">+Add point</button>
+    <div id="add_point" style="display: none;">
+        <form action="{% url 'love' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="point" >
+            <input  required type="text" name="point" placeholder="Your point">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
 </div>
 
 <div class="content">
@@ -53,8 +98,23 @@
         "There are plenty of fishes in the sea." <br>
 	    "You could be the best ice cream but still some people will prefer chocolate."
     </p>
+    <ul>
+        {% for rule in rules %} 
+            <li>{{rule.rule}}</li>
+        {% endfor %}
+    </ul>
     [Put things to remember while dealing with people here]
     [Put the philosophical ideas here]
+    <button data-div="add_rule">+Add rule</button>
+    <div id="add_rule" style="display: none;">
+        <form action="{% url 'love' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="rule" >
+            <input  required type="text" name="rule" placeholder="Your rule">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
     <!-- let the user enter list of items with button to show completed -->
 </div>
 

@@ -4,22 +4,22 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
 
-def list_entries():
+def list_entries(username):
     """
     Returns a list of all names of journal entries.
     """
     _, filenames = default_storage.listdir("entries")
     return list(sorted(re.sub(r"\.md$", "", filename)
-                for filename in filenames if filename.endswith(".md")))
+                for filename in filenames if filename.startswith(f"{username}")))
 
 
-def save_entry(title, content):
+def save_entry(title, content,username):
     """
     Saves an journal entry, given its title and Markdown
     content. If an existing entry with the same title already exists,
     it is replaced.
     """
-    filename = f"entries/{title}.md"
+    filename = f"entries/{username}{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
     default_storage.save(filename, ContentFile(content))

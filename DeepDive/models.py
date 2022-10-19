@@ -4,6 +4,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Timespent(models.Model):
+    timespent = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.timespent}"
+
 class UserInputs(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False)
 
@@ -15,11 +21,6 @@ class Quotes(models.Model):
     def __str__(self):
         return f"{self.quote} -{self.saidby}"
 
-class Timespent(models.Model):
-    timespent = models.DateTimeField()
-
-    def __str__(self):
-        return f"{self.timespent}"
 
 
 class BiggestGoals(UserInputs):
@@ -32,14 +33,13 @@ class Values(UserInputs):
 class Fears(UserInputs):
     fear =models.CharField(max_length=32)
 
-class Values(UserInputs):
-    value =models.CharField(max_length=32)
+
 
 class PersonalityTraits(UserInputs):
-    openess =models.IntegerField(default=0)
+    openness =models.IntegerField(default=0)
     conscientiousness =models.IntegerField(default=0)
     extroversion =models.IntegerField(default=0)
-    agreableness =models.IntegerField(default=0)
+    agreeableness =models.IntegerField(default=0)
     neuroticism =models.IntegerField(default=0)
 
 class Likes(UserInputs):
@@ -110,15 +110,15 @@ class Visualizatoins(models.Model):
     visualization= models.CharField(max_length=32)
 
 #for activity
-class WatchList(models.Model):
+class WatchList(UserInputs):
     show= models.CharField(max_length=32)
     finished_watching = models.BooleanField(default=False)
 
-class ReadingList(models.Model):
+class ReadingList(UserInputs):
     book= models.CharField(max_length=32)
     finished_reading = models.BooleanField(default=False)
     
-class SkillList(models.Model):
+class SkillList(UserInputs):
     skill= models.CharField(max_length=32)
     finished_learning = models.BooleanField(default=False)
     
