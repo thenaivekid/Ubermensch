@@ -1,5 +1,5 @@
 {% extends "DeepDive/layout.html" %} 
-{% load static %}
+
 
 {% block body %}
 <!-- put a form for each of the div to allow user to make entries. 
@@ -31,7 +31,6 @@ Make completed tasks green  -->
     <h3>Your beleif is powerful. If you believe that the world will give what you need, be consistent and give it all you have, 
     your wishes will definitely come to life. </h3>
     <h2>AMOR FATI => Love Fate</h2>
-    [put your wishes here]git 
 </div>
 
 
@@ -43,7 +42,7 @@ Make completed tasks green  -->
             <li>Visualize that you are the greatest speaker in the world, </li>
             <li>Visualize that the content of your speech is what everybody desperately need,</li>
             <li>And visualize that everybody is excied to listen to the greatest speaker that is you.</li>
-        </ol> 
+        </ol> trait
     </p>
 </div>
 
@@ -51,6 +50,21 @@ Make completed tasks green  -->
 <div class="content">
     <h1>Traits I Am Upgrading </h1>
     [put the changes You want to make in your personality, surrounding or relationships here]
+    <ul>
+        {% for trait in traits %} 
+            <li><h2>{{trait.trait}}</h2></li>
+        {% endfor %}
+    </ul>
+    <button data-div="add_trait">+Add trait</button>
+    <div id="add_trait" style="display: none;">
+        <form action="{% url 'overcomethyself' %}" method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="trait" >
+            <input  required type="text" name="trait" placeholder="Your bad triat">
+            <input type="submit" value="ADD">
+        </form>
+
+    </div>
 </div>
 
 <div class="content">

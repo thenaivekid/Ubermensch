@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block body %} 
-<div class="content" style="color: rgb(209, 80, 183); text-align: center;">
-    <h1></h1>
-    [put current date  and time here using js]
     
+<div id="time" style="font-size: larger;color: rgb(209, 80, 183); text-align: center;" >
+    [put the clock here]
+      
 </div>
 
 <div class="content">
@@ -18,25 +18,116 @@
 
 <div class="content">
     <h1>Watch List</h1>
-    [Put the watched movies/series here]
-    [Put movies/series to watch here]
-    <!-- allow user to add options and clear them once done -->
-   
+    <ul>
+        {% for movie in movies %} 
+            <li>{{movie.show}}
+                <form action="{% url 'activities' %}" method="POST">
+                    {% csrf_token %} 
+                    <input type="hidden" name="formname" value="watched_movie" >
+                    <input type="radio" name="movie_id" value="{{movie.id}}">
+                    <label for="{{forloop.count}}">Done?</label>
+                    <input type="submit" value="Done">
+                </form>
+            </li>
+                <br><br>
+        {% endfor %}
+    </ul>
+     
+
+    <button data-div="add_movie">+Add movie</button>
+    <div id="add_movie" style="display: none;">
+        <form action="{% url 'activities' %}"  method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="movie" >
+            <input required type="text" name="movie" placeholder="movie">
+            <input type="submit" movie="ADD">
+        </form>
+
+    </div>
+    <br>
+    <button data-div="watched_movie">Show Watched Moives</button>
+    <div id="watched_movie" style="display: none;">
+        Watched
+        {% for watched_movie in watched_movies %}  
+            <li>{{watched_movie.show}}</li>
+        {% endfor %}      
+    </div>
 </div>
 
 <div class="content">
     <h1>Reading List</h1>
-    [Put the read Books here]
-    [Put Books to read here]
-    <!-- allow user to add options and clear them once done -->
-   
+    <ul>
+        {% for book in books %} 
+            <li>{{book.book}}
+                <form action="{% url 'activities' %}" method="POST">
+                    {% csrf_token %} 
+                    <input type="hidden" name="formname" value="read_book" >
+                    <input type="radio" name="book_id" value="{{book.id}}">
+                    <label for="{{forloop.count}}">Done?</label>
+                    <input type="submit" value="Done">
+                </form>
+            </li>
+            <br><br>
+        {% endfor %}
+    </ul>
+     
+
+    <button data-div="add_book">+Add book</button>
+    <div id="add_book" style="display: none;">
+        <form action="{% url 'activities' %}"  method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="book" >
+            <input required type="text" name="book" placeholder="book">
+            <input type="submit" book="ADD">
+        </form>
+
+    </div>
+    <br>
+    <button data-div="read_book">Show Read Books</button>
+    <div id="read_book" style="display: none;">
+        Read Books
+        {% for read_book in read_books %}  
+            <li>{{read_book.book}}</li>
+        {% endfor %}      
+    </div>
 </div>
 
 <div class="content">
     <h1>New Skills</h1>
-    [Put the learnt new skills here]
-    [Put new skills to learn here]
-    <!-- allow user to add options and clear them once done -->
+    <ul>
+        {% for skill in skills %} 
+            <li>{{skill.skill}}
+                <form action="{% url 'activities' %}" method="POST">
+                    {% csrf_token %} 
+                    <input type="hidden" name="formname" value="learnt_skill" >
+                    <input type="radio" name="skill_id" value="{{skill.id}}">
+                    <label for="{{forloop.count}}">Done?</label>
+                    <input type="submit" value="Done">
+                </form>
+            </li>
+            <br><br>
+        {% endfor %}
+    </ul>
+     
+
+    <button data-div="add_skill">+Add skill</button>
+    <div id="add_skill" style="display: none;">
+        <form action="{% url 'activities' %}"  method="POST">
+            {% csrf_token %} 
+            <input type="hidden" name="formname" value="skill" >
+            <input required type="text" name="skill" placeholder="skill">
+            <input type="submit" skill="ADD">
+        </form>
+
+    </div>
+    <br>
+    <button data-div="learnt_skill">Show learnt skills</button>
+    <div id="learnt_skill" style="display: none;">
+        Learnt skills
+        {% for learnt_skill in learnt_skills %}  
+            <li>{{learnt_skill.skill}}</li>
+        {% endfor %}      
+    </div>
    
 </div>
 
