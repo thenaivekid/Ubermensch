@@ -1,0 +1,19 @@
+# env
+.env
+
+# python
+*.pyc
+*~
+__pycache__
+
+# db
+db.sqlite3
+
+# static
+/static/
+/media/
+
+# vscode
+.vscode/
+.history/
+*.code-workspace

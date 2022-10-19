@@ -4,7 +4,7 @@ body{
     background-color: #d9d7f1;
     padding: 10px;
 }
-#nav{
+nav{
     background-color: #ffcbcb;
     display: flex;
     flex-direction: column;
