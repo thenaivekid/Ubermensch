@@ -1,13 +1,14 @@
 body{
-    text-align:center;
+    display: grid;
+    grid-template-columns: 300px auto auto;
     background-color: #d9d7f1;
-    padding: 50px;
-    text-align: center;
+    padding: 10px;
 }
-#nav,#backhome{
+#nav{
     background-color: #ffcbcb;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-between;
     padding: 10px;
+    
 }

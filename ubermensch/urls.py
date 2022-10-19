@@ -15,10 +15,12 @@ Including another URLconf
 """
 from DeepDive.admin import admin_site
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin_site.urls),
     path('deepdive/', include("DeepDive.urls")),
     path('journal/', include("journal.urls")),
     path('', include("users.urls")),
-]
+] + static(settings.MEDIA_URL,document_root =settings.MEDIA_ROOT)
