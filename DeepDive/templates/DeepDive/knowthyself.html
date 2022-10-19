@@ -48,12 +48,18 @@
     <h1>My Personality Traits</h1>
     [Put your personality traits scores on the scale of 0-10 here]
     <ul><h3>
+        <li>Openness: This trait describes your curiosity and affinity for new ideas</li>
+        <li>Conscientiousness: This trait involves the way you get things done  </li>
+        <li>Extroversion: This trait is all about how you relate to people</li>
+        <li>Agreeableness: This trait taps into your attitudes toward teamwork and decision-making</li>
+        <li>Neuroticism: This trait speaks to your emotional stability and tendency to worry</li><br><br>
+        
         {% for personality_trait in personality_traits %}
-        <li>Openness: This trait describes your curiosity and affinity for new ideas    -->{{personality_trait.openness}}</li>
-        <li>Conscientiousness: This trait involves the way you get things done  -->{{personality_trait.conscientiousness}}</li>
-        <li>Extroversion: This trait is all about how you relate to people  -->{{personality_trait.extroversion}}</li>
-        <li>Agreeableness: This trait taps into your attitudes toward teamwork and decision-making  -->{{personality_trait.agreeableness}}</li>
-        <li>Neuroticism: This trait speaks to your emotional stability and tendency to worry  -->{{personality_trait.neuroticism}}</li><br><br>
+        <li>Openness:     -->{{personality_trait.openness}}</li>
+        <li>Conscientiousness:   -->{{personality_trait.conscientiousness}}</li>
+        <li>Extroversion:   -->{{personality_trait.extroversion}}</li>
+        <li>Agreeableness:   -->{{personality_trait.agreeableness}}</li>
+        <li>Neuroticism:   -->{{personality_trait.neuroticism}}</li><br><br>
         {% endfor %}
     </h3></ul>
     <button data-div="add_personality_trait">Add Scores</button>

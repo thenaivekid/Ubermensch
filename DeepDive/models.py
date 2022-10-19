@@ -58,27 +58,29 @@ class SelfRealizations(UserInputs):
     selfrealization =models.CharField(max_length=32)
 
 #for overcomingthyself
-class Meditions(UserInputs):
-    meditation =models.CharField(max_length=32)
-
-class Exercises(UserInputs):
-    exercise =models.CharField(max_length=32) 
 
 class TraitsUpgrading(UserInputs):
     trait =models.CharField(max_length=32) 
+    
+# class Meditions(UserInputs):
+#     meditation =models.CharField(max_length=32)
 
-class CharismaTips(UserInputs):
-    tip =models.CharField(max_length=32) 
+# class Exercises(UserInputs):
+#     exercise =models.CharField(max_length=32) 
 
-class LeadershipTips(UserInputs):
-    leading_tip =models.CharField(max_length=32) 
 
-class Comrades(UserInputs):
-    name =models.CharField(max_length=32) 
-    service= models.CharField(max_length=32) 
+# class CharismaTips(UserInputs):
+#     tip =models.CharField(max_length=32) 
 
-class ObservationStratedy(UserInputs):
-    stratedy =models.CharField(max_length=128)
+# class LeadershipTips(UserInputs):
+#     leading_tip =models.CharField(max_length=32) 
+
+# class Comrades(UserInputs):
+#     name =models.CharField(max_length=32) 
+#     service= models.CharField(max_length=32) 
+
+# class ObservationStratedy(UserInputs):
+#     stratedy =models.CharField(max_length=128)
 
 #for love
 class FindingLove(UserInputs):
@@ -94,20 +96,20 @@ class GoldenRules(UserInputs):
     rule =models.CharField(max_length=32)
 
 #for spinningwheels
-class ThemesOfTheDay(models.Model):
-    theme= models.CharField(max_length=32)
+# class ThemesOfTheDay(models.Model):
+#     theme= models.CharField(max_length=32)
 
-class SocialDare(models.Model):
-    dare= models.CharField(max_length=32)
+# class SocialDare(models.Model):
+#     dare= models.CharField(max_length=32)
 
-class CharacterTraits(models.Model):
-    charactertrait= models.CharField(max_length=32)
+# class CharacterTraits(models.Model):
+#     charactertrait= models.CharField(max_length=32)
 
-class Emotions(models.Model):
-    emotion= models.CharField(max_length=32)
+# class Emotions(models.Model):
+#     emotion= models.CharField(max_length=32)
 
-class Visualizatoins(models.Model):
-    visualization= models.CharField(max_length=32)
+# class Visualizatoins(models.Model):
+#     visualization= models.CharField(max_length=32)
 
 #for activity
 class WatchList(UserInputs):

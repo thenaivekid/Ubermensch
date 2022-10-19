@@ -1,9 +1,9 @@
 {% extends 'deepdive/layout.html' %} 
 {% block body %} 
-    <form action="{% url 'contact' %}">
+    <form action="{% url 'contact' %}" method="POST">
         {% csrf_token %} 
-        {{form}}
-        <input type="submit" value="Send">
+        <textarea name="email"  cols="30" rows="10"></textarea>
+        <input type="submit" value="Send Email">
     </form>
 
 {% endblock %}

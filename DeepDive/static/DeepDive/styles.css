@@ -89,3 +89,9 @@ progress{
     height:100px;
     width: 1000px;
 }
+
+#clock{
+    text-align: right;
+    border: 2px solid black;
+    padding: 5px;
+}

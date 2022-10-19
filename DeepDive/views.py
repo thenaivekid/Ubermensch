@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone,timesince
-from .forms import EmailForm
 
 from django.core.mail import send_mail
 
@@ -20,7 +19,8 @@ def home(request):
     if not user:
         return HttpResponse("Please login to proceed.")
     quotes =Quotes.objects.all()
-    quote= random.choice(quotes)
+    if quotes:
+        quote= random.choice(quotes)
     if request.method=='POST':
         formname= request.POST['formname']
         
@@ -150,23 +150,18 @@ def emptiness(request):
 
 def contact(request):
     if request.method =='POST':
-        form= EmailForm(request.POST)
-        if form.is_valid():
-            sentfrom=request.user.email
-            subject = form.cleaned_data.get('subject')
-            content = form.cleaned_data.get('content')
-            send_mail(
-                subject=subject,
-                message=content,
-                from_email=sentfrom,
-                recipient_list=['neupane.ashok.9696@gmail.com'],
-                fail_silently=False,
-                )
+        sentfrom=request.user.email
+        message = request.POST('email')
+        send_mail(
+            subject="Hey, from DeepDive",
+            message=message,
+            from_email=sentfrom,
+            recipient_list=['neupane.ashok.9696@gmail.com'],
+            fail_silently=False,
+            )
         return HttpResponseRedirect(reverse('home'))
 
-    return render(request,'deepdive/contact.html',{
-        "form": EmailForm(),
-    })
+    return render(request,'deepdive/contact.html')
 
 def journal(request):
     return HttpResponseRedirect(reverse("journal:index"))
