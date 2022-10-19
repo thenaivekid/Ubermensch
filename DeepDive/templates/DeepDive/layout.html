@@ -18,17 +18,17 @@
             <a href="{% url 'home' %}"><div id="logo">
                 <!-- logo as a link to home -->
                 <!-- show a gif of deep diving here -->
-                <img src="{% static 'DeepDive/images/logo.png' %}" alt="logo" width="100px">
+                <img src="{% static 'DeepDive/images/logo.jpg' %}" alt="logo" width="100px">
             </div></a>
 
             <div id="name">
-                <h2>DeepDive</h2>
+                <h2>The Sigma Mantra</h2>
             </div>
 
                 <!-- image as a link to user's profile -->
             <a href="{% url 'users:index' %}"><div id="profile">
                 <!-- Take a dp from user and display here -->
-                <img src="{% static 'DeepDive/images/dp.JPG' %}" width="50px" alt="profile pic">
+                <img src="{{request.user.profile.avatar.url}}" width="100px" alt="profile pic">
             </div></a>
             
         </div>

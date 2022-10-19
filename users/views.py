@@ -1,13 +1,26 @@
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
+
+
+from .models import Profile
+from django import forms
 
 from .utils import is_valid_password
 
 
 # Create your views here.
+
+class UpdateProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+
+    class Meta:
+        model = Profile
+        fields = ['avatar', 'bio']
+
 def index(request):
     if not request.user.is_authenticated:
         return render(request,'users/index.html',{
@@ -15,10 +28,16 @@ def index(request):
         })
     
     else:
-          
-        return render(request, "users/index.html",{
-           
-        })
+        if request.method=='POST':
+            profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+            if profile_form.is_valid():
+                profile_form.save()
+                
+
+    return render(request, "users/index.html",{
+        "form":UpdateProfileForm(),
+    })
 
 def login_view(request):
     if request.method== "POST":   
@@ -29,7 +48,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return render(request, "users/index.html",{
-                "message": "Logged in successfully!"
+                "message": "Logged in successfully!",
             })
         else:
             return render(request, "users/index.html" , {

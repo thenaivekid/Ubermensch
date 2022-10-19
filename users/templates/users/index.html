@@ -9,33 +9,13 @@
     </head>
 
     <body>
-        {% if not_authenticated %} 
-            <h1>{{ not_authenticated }}</h1>
-        {% else %}
-            <div>
-                <h1>Welcome, {{ request.user.first_name }}</h1>
-
-                <ul>
-                    <li> First Name: {{ request.user.first_name  }}</li>
-                    <li> Last Name: {{ request.user.last_name  }}</li>
-                    <li>UserName: {{ request.user.username  }}</li>
-                    <li>Email: {{request.user.email}} </li>
-                </ul>
-                
-                <br>
-                <div id="backhome">
-                    <a href="{% url 'home' %}"><h1>Let's Dive Deep Within...</h1></a>
-                </div>
-            </div>
-        {% endif %}
-        <h3>{{message}}</h3>
-        <div id="nav">
+    <nav><div id="nav">
     <div>
         <button data-div="login">LogIn</button> 
         
     </div>
     <div>
-        <button data-div="logout"><a href="{% url 'users:logout' %}">LogOut</a></button>
+        <a href="{% url 'users:logout' %}"><button data-div="logout">LogOut</button></a>
     </div>
     <div><button data-div="signup">SignUp</button> 
         
@@ -76,7 +56,41 @@
                 <input type="submit" value="Save Changes"><br>
             </form>
 
+        </div></nav>
+
+        <div>
+            {% if not_authenticated %} 
+            <h1>{{ not_authenticated }}</h1>
+        {% else %}
+            <div>
+                <h1>Welcome, {{ request.user.first_name }}</h1>
+
+                <img src="{{request.user.profile.avatar.url }}" alt="Your avatar" style="width:300px;">
+                <h2>Bio: {{request.user.profile.bio}}</h2>
+                <ul>
+                    <li> First Name: {{ request.user.first_name  }}</li>
+                    <li> Last Name: {{ request.user.last_name  }}</li>
+                    <li>UserName: {{ request.user.username  }}</li>
+                    <li>Email: {{request.user.email}} </li>
+                </ul>
+                <div id="backhome" style="text-align: center;">
+                    <a href="{% url 'home' %}"><h1>Let's Dive Deep Within...</h1></a>
+                </div>
+                {% endif %}
+                <h3>{{message}}</h3>
+                <br> 
+            </div>
         </div>
-        
+    <div>
+        <button data-div="add_avatar"><h3>Change Avatar</h3></button>
+                <div id="add_avatar" style="display: none;">
+                    <p><h5>Upload Avatar</h5></p>
+                    <form method="POST" enctype="multipart/form-data" action="{%  url 'users:index' %}" >
+                        {% csrf_token %} 
+                        {{form.as_p}}
+                        <button type="submit">Upload</button>
+                    </form>
+                </div>
+    </div>
     </body>
 </html>
