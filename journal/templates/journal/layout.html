@@ -19,11 +19,12 @@
                 <input type="text" name="keyword" placeholder="usernameYYYY-MM-DD">
                 <input type="submit" value="Search">
             </form>
-            <h3><a href="{% url 'journal:index' %}">All journals</a></h3>
-            <h3><a href="{% url 'journal:newjournal' %}">New journal</a></h3>
-            <h3><a href="{% url 'journal:randomjournal' %}">Random Journal</a></h3>
-            <h3><a href="{% url 'home' %}">Back to home</a></h3>
-
+            <nav>
+                <div><h3><a href="{% url 'journal:index' %}">All journals</a></h3></div>
+                <div><h3><a href="{% url 'journal:newjournal' %}">New journal</a></h3></div>
+                <div><h3><a href="{% url 'journal:randomjournal' %}">Random Journal</a></h3></div>
+                <div><h3><a href="{% url 'home' %}">Back to home</a></h3></div>
+            </nav>
         </div>
 
         <div id="mainBody">

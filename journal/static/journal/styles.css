@@ -1,12 +1,14 @@
 body {
-    display: grid;
-    grid-template-columns: 200px auto;
     text-align: center;
     background-color: #E3FCBF;
     font-family: Arial, sans-serif;
 
 }
-
+nav{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
 
 .content{
@@ -15,3 +17,4 @@ body {
     padding: 20px;
 }
 
+ 
